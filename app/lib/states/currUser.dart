@@ -1,12 +1,16 @@
+import 'package:app/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CurrentUser extends ChangeNotifier{
-  late String _userID;
-  late String _userEmail;
+  MyUser _currUser=MyUser(uid: '', email: '', fullName: '', accountCreated: Timestamp.now());
+  //late String _userID;
+  //late String _userEmail;
 
-  String get getUserID => _userID;
-  String get getEmail => _userEmail;
+  // String get getUserID => _userID;
+  // String get getEmail => _userEmail;
+  MyUser get getUser => _currUser;
 
   FirebaseAuth _auth=FirebaseAuth.instance;//creating an authentication instance
 
@@ -16,8 +20,10 @@ class CurrentUser extends ChangeNotifier{
         //The ? in User? indicates that the value may be null,
       // so ensuring that user is defined resolves the issue
       User? _firebaseUser= await _auth.currentUser;
-      _userID=_firebaseUser!.uid;
-      _userEmail=_firebaseUser.email!;
+      _currUser.uid=_firebaseUser!.uid;
+      _currUser.email=_firebaseUser.email!;
+      // _userID=_firebaseUser!.uid;
+      // _userEmail=_firebaseUser.email!;
       hasStarted=true;
     }
     catch(e){print(e);}
@@ -30,8 +36,10 @@ class CurrentUser extends ChangeNotifier{
       //The ? in User? indicates that the value may be null,
       // so ensuring that user is defined resolves the issue
       await _auth.signOut();
-      _userID="";
-      _userEmail="";
+      // _userID="";
+      // _userEmail="";
+      // _currUser="" as MyUser;
+      _currUser=MyUser(uid: '', email: '', fullName: '', accountCreated: Timestamp.now());
       hasStarted=true;
     }
     catch(e){print(e);}
@@ -57,8 +65,8 @@ class CurrentUser extends ChangeNotifier{
     try{
       UserCredential _authRes=await _auth.signInWithEmailAndPassword(email: email, password: psswd);
       if(_authRes.user!=null){
-        _userID=_authRes.user!.uid;
-        _userEmail=_authRes.user!.email!;
+        _currUser.uid=_authRes.user!.uid;
+        _currUser.email=_authRes.user!.email!;
         hasLoggedIn=true;
       }
     }
