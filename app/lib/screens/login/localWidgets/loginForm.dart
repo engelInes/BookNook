@@ -92,9 +92,10 @@ void _loginUser(String email, String psswd, BuildContext context) async{
   CurrentUser _currentUser=Provider.of<CurrentUser>(context,listen:false);
   try{
     if(await _currentUser.logInUser(email, psswd)){
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context)=>HomeScreen())
-      );
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(builder: (context)=>HomeScreen())
+      // );
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeScreen()), (route) => false);
     }
     else{
       ScaffoldMessenger.of(context).showSnackBar(

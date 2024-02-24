@@ -1,3 +1,4 @@
+import 'package:app/screens/rootScreen/rootS.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/login/login.dart';
 import 'package:app/states/currUser.dart';
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
           theme: MyTheme().buildTheme(),//.()=create an instance
-          home: MyLogin(),
+          //home: MyLogin(),
+          home:MyRoot() ,
       ),
     );
   }
