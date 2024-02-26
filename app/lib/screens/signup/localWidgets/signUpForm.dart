@@ -144,7 +144,7 @@ class _MySignUpFormState extends State<MySignUpForm> {
               //     istapped = 'Button tapped';
               //  });
               if(_passwordController.text==_checkPasswordController.text){
-                _signUpUser(_emailController.text,_passwordController.text, context);
+                _signUpUser(_emailController.text,_passwordController.text, context, _fullNameController.text);
               }
               else{
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -169,10 +169,10 @@ class _MySignUpFormState extends State<MySignUpForm> {
     );
   }
 
-  void _signUpUser(String email, String psswd, BuildContext context) async{
+  void _signUpUser(String email, String psswd, BuildContext context, String fullName) async{
     CurrentUser _currentUser=Provider.of<CurrentUser>(context,listen: false);
     try{
-      if(await _currentUser.signUpUser(email, psswd)){
+      if(await _currentUser.signUpUser(email, psswd, fullName)){
         Navigator.pop(context);//send the user back to the login screen
       }
       //Scaffold.of(context).showSnackBar()

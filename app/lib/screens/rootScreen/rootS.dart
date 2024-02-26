@@ -1,4 +1,4 @@
-import 'package:app/screens/homeScreen.dart';
+import 'package:app/screens/home/homeScreen.dart';
 import 'package:app/screens/login/login.dart';
 import 'package:app/states/currUser.dart';
 import 'package:app/widgets/myContainer.dart';

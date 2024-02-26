@@ -1,4 +1,4 @@
-import 'package:app/screens/homeScreen.dart';
+import 'package:app/screens/home/homeScreen.dart';
 import 'package:app/states/currUser.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signup/signup.dart';
