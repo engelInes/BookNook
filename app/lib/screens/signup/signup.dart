@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/signup/localWidgets/signupForm.dart';
 
-class MySignUp extends StatelessWidget{
+class MySignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,5 +31,4 @@ class MySignUp extends StatelessWidget{
       ),
     );
   }
-
 }

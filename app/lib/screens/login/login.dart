@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/screens/login/localWidgets/loginForm.dart';
 
-class MyLogin extends StatelessWidget{
+class MyLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +17,9 @@ class MyLogin extends StatelessWidget{
                   child: Image.asset("assets/book.png"),
                   //child: Color.fromARGB(172,169,163,100),
                 ),
-                SizedBox(height: 100.0,),//the box where you enter the data
+                SizedBox(
+                  height: 100.0,
+                ), //the box where you enter the data
                 myLoginForm(),
               ],
             ),
@@ -26,5 +28,4 @@ class MyLogin extends StatelessWidget{
       ),
     );
   }
-
 }

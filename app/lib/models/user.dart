@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MyUser{
+class MyUser {
   String uid;
   String email;
   String fullName;
@@ -11,5 +11,5 @@ class MyUser{
     required this.email,
     required this.fullName,
     required this.accountCreated,
-});
+  });
 }
