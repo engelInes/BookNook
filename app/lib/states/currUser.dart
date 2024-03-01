@@ -64,7 +64,7 @@ class CurrentUser extends ChangeNotifier {
     try {
       UserCredential _authRes = await _auth.createUserWithEmailAndPassword(
           email: email, password: psswd);
-      _user.uid = _authRes.user as String;
+      _user.uid = _authRes.user!.uid;
       _user.email = _authRes.user!.email!;
       _user.fullName = fullName;
       bool _isSuccessful = await MyDatabase().createUser(_user);

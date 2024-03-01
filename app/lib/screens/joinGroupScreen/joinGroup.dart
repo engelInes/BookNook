@@ -21,7 +21,7 @@ class _MyJoinGroupState extends State<MyJoinGroup>{
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context)=>MyRoot()
+              builder: (context)=>MyRoot(),
           ),
               (route) => false);
     }

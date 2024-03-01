@@ -12,6 +12,7 @@ class MyCreateGroup extends StatefulWidget{
 }
 
 class _MyCreateGroupState extends State<MyCreateGroup>{
+
   void _createGroup(BuildContext context, String groupName) async{
       CurrentUser _cUser=Provider.of<CurrentUser>(context, listen: false);
       bool _retString= await MyDatabase().createGroup(groupName, _cUser.getUser.uid);
@@ -19,7 +20,7 @@ class _MyCreateGroupState extends State<MyCreateGroup>{
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-                builder: (context)=>MyRoot()
+                builder: (context)=>MyRoot(),
             ),
             (route) => false);
       }
@@ -34,45 +35,43 @@ class _MyCreateGroupState extends State<MyCreateGroup>{
         children: <Widget>[
           Padding(
               padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: <Widget>[BackButton(
-
-              )],
-            ),
+              child: Row(
+                children: <Widget>[BackButton()],
+              ),
           ),
           Spacer(),
           Padding(
               padding: const EdgeInsets.all(20.0),
-            child: MyContainer(
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    controller: _groupNameController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.group),
-                      hintText: "Group Name ",
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  ElevatedButton(
-                      onPressed: ()=> _createGroup(context,_groupNameController.text),
-                      child:Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 100),
-                        child: Text(
-                          "Create group",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
+                child: MyContainer(
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _groupNameController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.group),
+                          hintText: "Group Name ",
                         ),
                       ),
-                  )
-                ],
-              ),
-            ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      ElevatedButton(
+                          onPressed: ()=> _createGroup(context,_groupNameController.text),
+                          child:Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 100),
+                            child: Text(
+                              "Create group",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ),
+                      )
+                    ],
+                  ),
+                ),
           ),
         ],
       ),

@@ -22,7 +22,6 @@ class _MyRootState extends State<MyRoot>{
 
   @override
   void didChangeDependencies() async{
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     CurrentUser _currentUser=Provider.of<CurrentUser>(context,listen: false);
     bool _returnedStart= await _currentUser.onStartUp();
