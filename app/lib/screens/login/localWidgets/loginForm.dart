@@ -1,4 +1,5 @@
 import 'package:app/screens/home/homeScreen.dart';
+import 'package:app/screens/rootScreen/rootS.dart';
 import 'package:app/states/currUser.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/signup/signup.dart';
@@ -107,7 +108,7 @@ void _loginUser(String email, String psswd, BuildContext context) async {
       // );
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => MyRoot()),
           (route) => false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

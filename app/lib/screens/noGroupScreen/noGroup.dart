@@ -1,11 +1,25 @@
+import 'package:app/screens/createGroupScreen/createGroup.dart';
+import 'package:app/screens/joinGroupScreen/joinGroup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyNoGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    void _goToJoinGroup() {}
-    void _goToCreateGroup() {}
+    void _goToJoinGroup(BuildContext context) {
+      Navigator.push(
+          context, MaterialPageRoute(
+          builder: (context)=>MyJoinGroup(),
+      ),
+      );
+    }
+    void _goToCreateGroup(BuildContext context) {
+      Navigator.push(
+        context, MaterialPageRoute(
+        builder: (context)=>MyCreateGroup(),
+      ),
+      );
+    }
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -46,10 +60,10 @@ class MyNoGroup extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 ElevatedButton(
-                    onPressed: () => _goToCreateGroup(),
+                    onPressed: () => _goToCreateGroup(context),
                     child: Text("Create a group")),
                 ElevatedButton(
-                    onPressed: () => _goToJoinGroup(),
+                    onPressed: () => _goToJoinGroup(context),
                     child: Text(
                       "Join a group",
                       style: TextStyle(

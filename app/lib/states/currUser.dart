@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class CurrentUser extends ChangeNotifier {
   MyUser _currUser =
-      MyUser(uid: '', email: '', fullName: '', accountCreated: Timestamp.now());
+      MyUser(uid: '', email: '', fullName: '', accountCreated: Timestamp.now(), groupID: '');
 
   //late String _userID;
   //late String _userEmail;
@@ -49,7 +49,7 @@ class CurrentUser extends ChangeNotifier {
       // _userEmail="";
       // _currUser="" as MyUser;
       _currUser = MyUser(
-          uid: '', email: '', fullName: '', accountCreated: Timestamp.now());
+          uid: '', email: '', fullName: '', accountCreated: Timestamp.now(), groupID: '');
       hasStarted = true;
     } catch (e) {
       print(e);
@@ -60,7 +60,7 @@ class CurrentUser extends ChangeNotifier {
   Future<bool> signUpUser(String email, String psswd, String fullName) async {
     bool hasSignedIn = false;
     MyUser _user = MyUser(
-        uid: '', email: '', fullName: '', accountCreated: Timestamp.now());
+        uid: '', email: '', fullName: '', accountCreated: Timestamp.now(), groupID: '');
     try {
       UserCredential _authRes = await _auth.createUserWithEmailAndPassword(
           email: email, password: psswd);

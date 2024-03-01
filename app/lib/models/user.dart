@@ -5,11 +5,13 @@ class MyUser {
   String email;
   String fullName;
   Timestamp accountCreated;
+  String groupID;
 
   MyUser({
     required this.uid,
     required this.email,
     required this.fullName,
     required this.accountCreated,
+    required this.groupID,
   });
 }
