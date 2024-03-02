@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:app/screens/addBookScreen/addBookScreen.dart';
 import 'package:app/screens/noGroupScreen/noGroup.dart';
 import 'package:app/screens/rootScreen/rootS.dart';
 import 'package:app/states/currGroup.dart';
 import 'package:app/states/currUser.dart';
+import 'package:app/utils/counter.dart';
 import 'package:app/widgets/myContainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +18,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  List<String> _timeUntilNextBook=List.filled(2, "");//add growable: true if necc
+  //[0] time until book is due
+  //[1] time until next book is revealed
+
+  late Timer _timer;
+  void startTimer(CurrentGroup currentGroup){
+    _timer=Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _timeUntilNextBook=MyCounter().timeLeft(currentGroup.getCurrentGroup.currentBookDue.toDate());
+      });
+    });
+  }
   @override
   void initState(){
     super.initState();
     CurrentUser _currUser=Provider.of<CurrentUser>(context, listen: false);
     CurrentGroup _currGroup=Provider.of<CurrentGroup>(context, listen: false);
     _currGroup.updateStateFromDatabase(_currUser.getUser.groupID);
+    startTimer(_currGroup);
+  }
+
+  @override
+  void dispose(){
+    _timer.cancel();
+    super.dispose();
   }
   void _goToAddBook(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(
@@ -61,10 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       Text(
                         //"book1",
-                        value.getCurrentBook.bookName,//?? "loading...",
+                        value.getCurrentBook.bookName ?? "loading...",
                         style: TextStyle(
                           fontSize: 30,
-                          color: Colors.pink,
+                          color: Colors.black,
                         ),
                       ),
                       Padding(
@@ -72,16 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              "due in: ",
+                              "Due In: ",
                               style: TextStyle(
                                 fontSize: 30,
-                                color: Colors.pink,
+                                color: Colors.black,
                               ),
                             ),
                             Expanded(
                               child: Text(
+                                _timeUntilNextBook[0] ?? "loading..",
                                 //"x days",
-                                value.getCurrentGroup.currentBookDue.toDate().toString(),
+                                //value.getCurrentGroup.currentBookDue.toDate().toString(),
                                 //(value.getCurrentGroup.currentBookDue!=null)? value.getCurrentGroup.currentBookDue.toDate().toString():"loading...",
                                 style: TextStyle(
                                   fontSize: 30,
@@ -112,18 +135,19 @@ class _HomeScreenState extends State<HomeScreen> {
             child: MyContainer(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Next book revealed in: ",
+                      "Next book \nrevealed in: ",
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.pink,
                       ),
                     ),
                     Text(
-                      "x hours",
+                      //"x hours",
+                      _timeUntilNextBook[1]??"loading",
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.pink,
