@@ -1,10 +1,13 @@
-import 'package:app/screens/rootScreen/rootS.dart';
-import 'package:app/services/database.dart';
-import 'package:app/states/currUser.dart';
+//import 'dart:html';
+
+import 'package:app/screens/addBookScreen/addBookScreen.dart';
+//import 'package:app/screens/rootScreen/rootS.dart';
+//import 'package:app/services/database.dart';
+//import 'package:app/states/currUser.dart';
 import 'package:app/widgets/myContainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 class MyCreateGroup extends StatefulWidget{
   @override
@@ -13,17 +16,17 @@ class MyCreateGroup extends StatefulWidget{
 
 class _MyCreateGroupState extends State<MyCreateGroup>{
 
-  void _createGroup(BuildContext context, String groupName) async{
-      CurrentUser _cUser=Provider.of<CurrentUser>(context, listen: false);
-      bool _retString= await MyDatabase().createGroup(groupName, _cUser.getUser.uid);
-      if(_retString==1){
-        Navigator.pushAndRemoveUntil(
+  void _goToAddBook(BuildContext context, String groupName) async{
+      // CurrentUser _cUser=Provider.of<CurrentUser>(context, listen: false);
+      // bool _retString= await MyDatabase().createGroup(groupName, _cUser.getUser.uid, );
+      // if(_retString==1){
+        Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context)=>MyRoot(),
+                builder: (context)=>MyAddBook(onGroupCreation: true, groupName: groupName),
             ),
-            (route) => false);
-      }
+        );
+
   }
 
   TextEditingController _groupNameController=TextEditingController();
@@ -56,7 +59,7 @@ class _MyCreateGroupState extends State<MyCreateGroup>{
                         height: 20.0,
                       ),
                       ElevatedButton(
-                          onPressed: ()=> _createGroup(context,_groupNameController.text),
+                          onPressed: ()=> _goToAddBook(context,_groupNameController.text),
                           child:Padding(
                             padding: EdgeInsets.symmetric(horizontal: 100),
                             child: Text(

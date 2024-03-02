@@ -14,6 +14,7 @@ class CurrentUser extends ChangeNotifier {
 
   // String get getUserID => _userID;
   // String get getEmail => _userEmail;
+  bool get isAuthenticated => _currUser.uid.isNotEmpty;
   MyUser get getUser => _currUser;
 
   FirebaseAuth _auth =

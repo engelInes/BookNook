@@ -1,3 +1,5 @@
+//import 'dart:js_util';
+
 import 'package:app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app/models/group.dart';
@@ -33,7 +35,7 @@ class MyDatabase {
       retVal.fullName = userData?['fullName'];
       retVal.email = userData?['email'];
       retVal.accountCreated = userData?['createdAccount'];
-      retVal.groupID= userData?['groupId'];
+      retVal.groupID= userData?['groupID'];
     } catch (e) {
       print(e);
     }
@@ -60,13 +62,14 @@ class MyDatabase {
   }
 
   Future<MyBook> getBookData(String groupID, String bookID) async {
-    MyBook retVal = MyBook(bookID: '', bookName: '', length: 0, dateCompleted: Timestamp.now());
+    MyBook retVal = MyBook(bookID: '', bookName: '', author: '',length: 0, dateCompleted: Timestamp.now());
     try {
       DocumentSnapshot _docSnap =
       await _firestore.collection("groups").doc(groupID).collection("books").doc(bookID).get();
       retVal.bookID = _docSnap.id;
       Map<String, dynamic>? groupData = _docSnap.data() as Map<String, dynamic>?;
       retVal.bookName = groupData?['name'];
+      retVal.author=groupData?['author'];
       retVal.length = groupData?['length'];
       retVal.dateCompleted = groupData?['dateCompleted'];
     } catch (e) {
@@ -75,7 +78,7 @@ class MyDatabase {
     return retVal;
   }
 
-  Future<bool> createGroup(String groupName, String userID) async {
+  Future<bool> createGroup(String groupName, String userID, MyBook initialBook) async {
     bool newGroup = false;
     List<String> members= [];
     try {
@@ -91,6 +94,7 @@ class MyDatabase {
       await _firestore.collection("users").doc(userID).update({
         'groupID' : _docRef.id,
       });
+      addBook(_docRef.id, initialBook);
       newGroup = true;
     } catch (e) {
       print(e);
@@ -98,6 +102,26 @@ class MyDatabase {
     return newGroup;
   }
 
+  Future<bool> addBook(String groupID, MyBook book) async {
+    bool newUser = false;
+    try {
+      DocumentReference _docref= await _firestore.collection("groups").doc(groupID).collection("books").add({
+        'name': book.bookName,
+        'author': book.author,
+        'length': book.length,
+        'dateCompleted': book.dateCompleted,
+      });
+      await _firestore.collection("groups").doc(groupID).update({
+        "currentBookID": _docref.id,
+        "currentBookDue": book.dateCompleted,
+      });
+      newUser = true;
+    } catch (e) {
+      print(e);
+    }
+    return newUser;
+  }
+  
   Future<bool> joinGroup(String groupID, String userID) async {
     bool newGroup = false;
     List<String> members= [];

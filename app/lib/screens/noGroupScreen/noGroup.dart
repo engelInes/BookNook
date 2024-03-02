@@ -33,7 +33,7 @@ class MyNoGroup extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Text(
-                "welcome! tra la la",
+                "welcome to Book Nook!",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.0,
